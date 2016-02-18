@@ -1,0 +1,141 @@
+<header ng-include="'views/header2.html'"></header>
+
+
+<div >
+    <ul class="timeline" >
+        <!-- timeline time label -->
+        <li class="time-label">
+                              <span ng-show="jobseeker_id==js_id" class="bg-green">
+                                <a href="#/jobseekers/{{jobseeker_id}}" style="color: white">This Is Me</a>
+                              </span>
+                              <span ng-hide="jobseeker_id==js_id" class="bg-blue">
+                                <a href="#/jobseekers/{{jobseeker_id}}" style="color: white">{{fullname}}</a>
+                              </span>
+        </li>
+        <!-- /.timeline-label -->
+        <!-- timeline item -->
+        <li>
+            <i class="fa fa-comment-o bg-blue"></i>
+            <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> {{publish_date}}<span>  <a class="btn btn-primary btn-xs fa fa-pencil-square-o" ng-click=toggle()  ng-show="js_id==jobseeker_id"></a></span></span>
+                <h3 class="timeline-header"><a href="#">{{title}}</a></h3>
+                <div class="timeline-body" style="white-space: pre-line">
+                    {{body}}
+                </div>
+                <!--<div class='timeline-footer'>-->
+                    <!--<a class="btn btn-primary btn-xs" href="#/newsfeed/{{post.id}}">Read more</a>-->
+                    <!--<a class="btn btn-danger btn-xs" ng-click="deletePost(post.id)">delete</a>-->
+                <!--</div>-->
+
+            </div>
+        </li>
+
+    </ul>
+
+
+
+    <!--Edit post div-->
+    <div id="editPost" class="center-block">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <!-- general form elements disabled -->
+                    <div class="box box-primary">
+                        <div class="box-body">
+
+                            <div ng-init="dis=true" >
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text"  ng-model="title" class="form-control" ng-disabled="dis"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Body</label>
+                                    <textarea ng-model="body" class="form-control" rows="7" ng-disabled="dis"></textarea>
+                                </div>
+
+
+                                <p ng-hide="dis">
+                                    <button ng-click=update()>Save Changes</button>
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    <!--End Edit post div-->
+
+    </div>
+
+
+    <div ng-controller="commentCtrl" class="center-block">
+
+        <section class="content">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <!-- general form elements disabled -->
+                    <div class="box box-warning">
+                            <div class="box-body">
+
+
+                                <div class="form-group">
+                                    <textarea ng-model="content" class="form-control" rows="1" placeholder="Write a comment ....."></textarea>
+                                    <center>
+                                        <button class="btn btn-primary btn-xs fa fa-plus center-block" ng-click="addComment()"> Add Comment</button>
+                                    </center>
+                                </div>
+
+
+                                <!--Get All Comments-->
+                                <!--get content from the DB using-->
+                                <ul class="timeline" ng-init="getComments()" id="comments">
+                                    <li ng-repeat="comment in comments track by $index">
+                                        <div class="timeline-item">
+                                                <span class="time"><span><a class="btn btn-primary btn-xs fa fa-pencil-square-o" ng-click="toggleModal(comment.comment_id,comment.content)"  ng-show="auth_user_id==comment.user_id"></a></span>
+                                                    <span>   <a class="btn btn-danger btn-xs fa fa-times" ng-click="deleteComment(comment.comment_id)"  ng-show="auth_user_id==comment.user_id"></a>  </span><i class="fa fa-clock-o"></i>  {{comment.date}}</span>
+                                            <h3 class="timeline-header fa fa-comments">
+                                                <a href="#/jobseekers/{{comment.user_id}}" ng-hide="auth_user_id==comment.user_id" > {{comment.fullname}}</a>
+                                                <a href="#/jobseekers/{{comment.user_id}}" ng-show="auth_user_id==comment.user_id" > This Is Me</a>
+                                            </h3>
+                                                <div class="timeline-body">
+                                                    {{comment.content}}
+                                                </div>
+
+                                        </div>
+
+
+                                    </li>
+                                    <modal title="Update Comment" visible="showModal">
+                                        <div class="form-group">
+                                            <textarea ng-model="editedContent" class="form-control" rows="2"></textarea>
+                                            <center>
+                                                <button class="btn btn-primary btn-xs fa fa-edit center-block" ng-click="editComment(editedCommentId,editedContent)"> Edit Comment</button>
+                                            </center>
+                                        </div>
+                                    </modal>
+                                </ul>
+                                <!--End Get All Comments-->
+
+                            </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+
+
+
+    </div>
+</div>
+
+
+
+

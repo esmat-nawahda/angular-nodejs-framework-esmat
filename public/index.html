@@ -1,0 +1,100 @@
+﻿<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+
+
+
+    <!--Jquery-->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!--AngularJs-->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <!--End AngularJs-->
+
+    <!-- Bootstrap 3.3.2 -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+    <!--Responsible for routing-->
+    <script src="scripts/app.js"></script>
+    <!--End Responsible for routing-->
+
+    <script src="libs/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/sweet-alert.css">
+
+
+
+
+
+</head>
+<body ng-app="app" id="appBody">
+<div style="clear: both">&nbsp;</div>
+<!--<button class="btn btn-mini btn-primary"-->
+        <!--style="margin-top: 6px;" type="button"-->
+        <!--ng-click="logoutLinkedIn()" ng-show="">Logout</button>-->
+<!--<img src="imgs\job_seeking.JPG" id="background-image" />-->
+
+    Test
+<a href="#/addPost">Add Post</a>
+<a href="#/register">New User</a>
+<div class="page-content">
+
+
+    <!--Begin Views-->
+
+
+    <div>
+        <ng-view>
+
+        </ng-view>
+    </div>
+
+    <!--End Views-->
+</div>
+
+
+
+<!--Begin Controllers-->
+
+<script src="scripts/controllers/postCtrl.js"></script>
+<script src="scripts/controllers/userCtrl.js"></script>
+<script src="scripts/controllers/loginCtrl.js"></script>
+
+<!--End Controllers-->
+
+
+
+<!--Begin Models-->
+
+<script src="scripts/models/postModel.js"></script>
+<script src="scripts/models/userModel.js"></script>
+
+<!--End Models-->
+
+
+<!--Begin Services-->
+
+<script src="scripts/services/authenticationService.js"></script>
+<script src="scripts/services/postService.js"></script>
+<script src="scripts/services/userService.js"></script>
+
+<!--End Services-->
+
+
+
+<!--Begin Directives-->
+
+<!--<script src="scripts/directives/...."></script>-->
+
+<!--End Directives-->
+
+
+
+
+
+</body>
+</html>

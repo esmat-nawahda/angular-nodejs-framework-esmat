@@ -1,0 +1,347 @@
+<style>
+    @import url(http://fonts.googleapis.com/css?family=Open+Sans);
+    body{
+        background:#f1f1f1;
+    }
+    .container{
+        width:200px;
+        margin:10px auto
+    }
+    .spinner, .border{
+        border-top: 20px solid #0A5BC4;
+        border-left: 20px solid #00A600;
+        border-right: 20px solid #DC572E;
+        border-bottom: 20px solid #BF1E4B;
+        height:0;
+        width:0;
+        border-radius: 20px;
+        -webkit-animation: spin 1s infinite linear;
+        -moz-animation: spin 1s infinite linear;
+        animation: spin 1s infinite linear;
+        margin-right:10px;/*Just 4 spacing*/
+        display:inline-block;/*Can also be removed*/
+    }
+    .spinner:last-child{
+        margin:0;
+    }
+    .border{
+        border-top: 10px solid #0A5BC4;
+        border-left: 10px solid #00A600;
+        border-right: 10px solid #DC572E;
+        border-bottom: 10px solid #BF1E4B;
+        height:40px;
+        width:40px;
+        -webkit-animation-name: spinback;
+        -webkit-animation-duration: .5s;
+        -moz-animation-name: spinback;
+        -moz-animation-duration: .5s;
+        animation-name: spinback;
+        animation-duration: .5s;
+        animation-name: spinback;
+        animation-duration: .5s;
+    }
+    .arrow{
+        -webkit-animation-duration: 6s;
+        -moz-animation-duration: 6s;
+        animation-duration: 6s;
+        animation-duration: 6s;
+        height:80px;
+        width:80px;
+        border:10px solid black;
+        border-top: 10px solid transparent;
+        position:relative;
+
+    }
+    .arrow1{
+        width: 0;
+        height: 0;
+        border-top: 7px solid black;
+        border-left: 7px solid transparent;
+        position:absolute;
+        top:5px;
+        left:4px;
+    }
+    .arrow2{
+        width: 0;
+        height: 0;
+        border-bottom: 7px solid white;
+        border-left: 7px solid transparent;
+        position:absolute;
+        top:4px;
+        left:68px;
+    }
+    @keyframes spin{
+        100%{
+
+            -webkit-transform:rotate(360deg);
+            transform:rotate(360deg);
+        }
+    }
+    @keyframes spinback{
+        100%{
+
+            -webkit-transform:rotate(-360deg);
+            transform:rotate(-360deg);
+        }
+    }
+    @-webkit-keyframes spin{
+        100%{
+
+            -webkit-transform:rotate(360deg);
+            transform:rotate(360deg);
+        }
+    }
+    @-webkit-keyframes spinback{
+        100%{
+
+            -webkit-transform:rotate(-360deg);
+            transform:rotate(-360deg);
+        }
+    }
+    @-moz-keyframes spin{
+        100%{
+
+            -webkit-transform:rotate(360deg);
+            transform:rotate(360deg);
+        }
+    }
+    @-moz-keyframes spinback{
+        100%{
+
+            -webkit-transform:rotate(-360deg);
+            transform:rotate(-360deg);
+        }
+    }
+    /* Can be removed */
+
+    header{
+        display:blocK;
+        width:500px;
+        color:#313131;
+        margin:20px auto;
+        text-align:center;
+        font-size:.8em;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+</style>
+
+<header ng-include="'views/header2.html'"></header>
+
+
+<p><button ng-click="showAddJob()" class="btn btn-inverse"  ng-show="check()==2">Add New Job</button></p>
+
+<center>
+
+    <div ng-controller="addJobCtrl" id="addNewJob" >
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements disabled -->
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">Write New Job..</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+
+                        <!-- text input -->
+                        <div class="form-group">
+                            <input type="text"  ng-model="jobTitle" class="form-control" placeholder="Enter Job..."/>
+                        </div>
+
+
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <textarea ng-model="jobDescription" class="form-control" rows="3" placeholder="Enter Description..."></textarea>
+                        </div>
+                         <!--textarea -->
+                        <div class="form-group">
+                            <textarea ng-model="jobTag" class="form-control" rows="3" placeholder="Enter Requirements..."></textarea>
+                        </div>
+
+                        <!--<tags-input ng-model="tags">-->
+                            <!--<auto-complete source="loadTags($query)"></auto-complete>-->
+                        <!--</tags-input>-->
+
+                        <div class="box-footer">
+                            <button class="btn btn-primary" ng-click="addJob()" >Add Job</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</center>
+
+
+
+
+
+<div class="row">
+
+    <!--Newsfeed-->
+    <div class="col-sm-9">
+
+
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- The time line -->
+                <div  ng-repeat="job in jobs track by $index">
+                    <ul class="timeline">
+
+                        <!-- timeline time label -->
+                        <li class="time-label">
+                              <span ng-show="job.jobProvider==jp_id" class="bg-green">
+                                <a href="#/companies/{{job.jobProvider}}" style="color: white">Our Company</a>
+                              </span>
+                              <span ng-hide="job.jobProvider==jp_id" class="bg-blue">
+                                <a href="#/companies/{{job.jobProvider}}" style="color: white">{{job.Name}}</a>
+                              </span>
+                        </li>
+                        <!-- /.timeline-label -->
+                        <!-- timeline item -->
+                        <li    >
+                            <i class="fa fa-comment-o bg-blue"></i>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> {{job.publishDate}}</span>
+                                <h3 class="timeline-header"><a href="#/newsfeedJob/{{job.jobId}}">{{job.jobTitle}}</a></h3>
+                                <div class="timeline-body"  style="white-space: pre-line">
+
+                                    {{job.jobDescription}}
+                                </div>
+                                <div class="timeline-body"  style="white-space: pre-line">
+                                    {{job.jobTag}}
+                                </div>
+                                <div class='timeline-footer'>
+                                    <a class="btn btn-primary btn-xs" href="#/newsfeedJob/{{job.jobId}}">Read more</a>
+                                    <a class="btn btn-danger btn-xs" ng-show="job.jobProvider==jp_id" ng-click="deleteJob(job.jobId)">delete</a>
+                                </div>
+                            </div>
+                        </li>
+
+
+
+
+                        <li>
+                            <i class="fa fa-clock-o bg-gray"></i>
+                        </li>
+                    </ul>
+                    <div>&nbsp</div>
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <center>
+
+            <button class="center-block btn btn-inverse" ng-click="loadMore()">Load More..</button>
+
+            <div class="container" id="loadMoreSpinner">
+                <!--<div class="spinner"></div>-->
+                <div class="spinner border"></div>
+                <!--<div class="spinner arrow"><div class="arrow1"></div><div class="arrow2"></div></div>-->
+            </div>
+        </center>
+
+    </div>
+    <!--End Newsfeed-->
+
+
+    <!--Notifications-->
+
+        <div   ng-show="check()==1" class="col-sm-3" style="position:fixed; right: -2px; height:500px; overflow-x:auto">
+
+        <div ng-controller="JobsListCtrl" id="newsfeedJobContent">
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+
+                    
+                    <div class="col-md-12" id="newsfeedJob">
+                        <h1 class="box-title" style="font-family: sans-serif"> Your JobList..</h1>
+                        <!-- general form elements disabled -->
+                        <div class="box box-warning" ng-repeat="job in jobList track by $index">
+                            <div class="box-header">
+                                <h1 class="box-title" style="font-family: sans-serif"><a href="#/newsfeedJob/{{job.jobId}}"> {{job.jobTitle}}</a></h1>
+
+                            <div class="box-body">
+
+                                <div class="form-group">
+
+                                    <div class="timeline-body"  style="white-space: pre-line">
+                                       <h5>{{job.jobDescription | limitTo:200}}<span ng-show="job.jobDescription.length>200">...</span></h5>
+                                    </div>
+                                    <div>
+                                        <h5><b>Requirements:</b> {{job.jobTag | limitTo:25}}... </h5>
+                                    </div>
+                                    <div>
+                                       <h5> <b>Similarity:</b> {{job.similarity}}% </h5>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!--<div ng-controller="linkedIn">-->
+
+            <!--<!-- Main content -->
+            <!--<section class="content">-->
+                <!--<div class="row">-->
+
+
+                    <!--<div class="col-md-12">-->
+                        <!--<h1 class="box-title" style="font-family: sans-serif"> Your remainder..</h1>-->
+                        <!--<!-- general form elements disabled -->
+                        <!--<div class="box box-warning" ng-repeat="remainder in remainders track by $index">-->
+                            <!--<div class="box-header">-->
+                                <!--<h1 class="box-title" style="font-family: sans-serif">  Date is{{remainder.remainderDate}} you must go to {{remainder.eventTitle}} interview </h1>-->
+
+
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</section>-->
+        <!--</div>-->
+
+        <div ng-controller="JobsListCtrl">
+
+
+
+        <center >
+
+            <button class="center-block btn btn-default" ng-click="loadMoreJobList()">Load More..</button>
+
+            <div class="container" id="loadMoreJobList">
+                <!--<div class="spinner"></div>-->
+                <div class="spinner border"></div>
+                <!--<div class="spinner arrow"><div class="arrow1"></div><div class="arrow2"></div></div>-->
+            </div>
+
+            <!--<div class="container" id="loadMoreNotiSpinner">-->
+            <!--<!--<div class="spinner"></div>-->
+            <!--<div class="spinner border"></div>-->
+            <!--<!--<div class="spinner arrow"><div class="arrow1"></div><div class="arrow2"></div></div>-->
+            <!--</div>-->
+        </center>
+
+        </div>
+
+    </div>
+    <!--End Notifications-->
+
+
+</div>
+
+
+
+
